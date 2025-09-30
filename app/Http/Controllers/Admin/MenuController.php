@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Permiso;
+use App\Http\Requests\ValidacionMenu;
+use App\Models\Admin\Menu;
 use Illuminate\Http\Request;
 
-class PermisoController extends Controller
+class MenuController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $permisos = Permiso::orderBy('id')->get();
-        return view('admin.permiso.index', compact('permisos'));
+        //
     }
 
     /**
@@ -22,15 +22,16 @@ class PermisoController extends Controller
      */
     public function crear()
     {
-        return view('admin.permiso.crear');
+        return view('admin.menu.crear');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function guardar(Request $request)
+    public function guardar(ValidacionMenu $request)
     {
-        //
+        Menu::create($request->all());
+        return redirect('admin/menu/crear')->with('mensaje', 'Menú creado con exito');
     }
 
     /**
