@@ -1,11 +1,11 @@
 @extends("theme.$theme.layout")
 
 @section('titulo')
-Sistema de Menús
+Sistema de Roles
 @endsection
 
 @section("scripts")
-<script src="{{asset(" assets/pages/scripts/admin/menu/crear.js")}}" type="text/javascript"></script>
+<script src="{{asset("assets/pages/scripts/admin/crear.js")}}" type="text/javascript"></script>
 @endsection
 
 @section('contenido')
@@ -15,17 +15,17 @@ Sistema de Menús
         @include('includes.mensaje')
         <div class="box box-danger">
             <div class="box-header with-border">
-                <h3 class="box-title">Crear Menús</h3>
+                <h3 class="box-title">Crear Roles</h3>
             </div>
-            <form id="form-general" class="form-horizontal" action="{{ route('menu.guardar') }}" method="POST">
+            <form id="form-general" class="form-horizontal" action="{{ route('rol.guardar') }}" method="POST">
                 @csrf
                 <div class="box-body">
-                    @include('admin.menu.form')
+                    @include('admin.rol.form')
                 </div>
                 <div class="box-footer">
                     <div class="col-lg-3"></div>
                     <div class="col-lg-6">
-                        @include('admin.menu.boton-form-crear')
+                        @include('admin.rol.boton-form-crear')
                     </div>
                 </div>
             </form>

@@ -2,3 +2,13 @@ label.requerido::after{
     content: " *";
     color: #e73d4a;
 }
+
+.d-inline{
+    display: inline;
+}
+
+.btn-group {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
