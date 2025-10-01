@@ -1,2 +1,7 @@
-<button type="reset" class="btn btn-default">Cancel</button>
-<button type="submit" class="btn btn-success">Guardar</button>
+{{-- <button type="reset" class="btn btn-default">Cancel</button>
+<button type="submit" class="btn btn-success">Guardar</button> --}}
+
+    <button id="btn-save" type="submit" class="btn btn-success ml-3">
+        <i class="fa fa-save"></i> Guardar
+    </button>
+    <a href="{{ route('menu') }}" class="btn btn-default"><i class="fa fa-backward"></i> Volver</a>
