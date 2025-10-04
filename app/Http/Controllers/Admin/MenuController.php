@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidacionMenu;
 use App\Models\Admin\Menu;
 use Illuminate\Http\Request;
+use App\Rules\ValidarCampoUrl;
 
 class MenuController extends Controller
 {
@@ -29,18 +29,16 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function guardar(ValidacionMenu $request)
+    public function guardar(Request $request)
     {
-        Menu::create($request->all());
-        return redirect('admin/menu/crear')->with('mensaje', 'Menú creado con exito');
-    }
+        $request->validate([
+            'nombre' => 'required|max:50|unique:menu,nombre',
+            'url' => 'required|max:100',
+            'icono' => 'nullable|max:50'
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function mostrar(string $id)
-    {
-        //
+        Menu::create($request->all());
+        return redirect('admin/menu/crear')->with('mensaje', 'Menú creado con éxito');
     }
 
     /**
@@ -48,7 +46,8 @@ class MenuController extends Controller
      */
     public function editar(string $id)
     {
-        //
+        $data = Menu::findOrFail($id);
+        return view('admin.menu.editar', compact('data'));
     }
 
     /**
@@ -56,7 +55,13 @@ class MenuController extends Controller
      */
     public function actualizar(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|max:50|unique:menu,nombre,' . $id,
+            'url' => ['required', 'max:100', new ValidarCampoUrl],
+            'icono' => 'nullable|max:50'
+        ]);
+        Menu::findOrFail($id)->update($request->all());
+        return redirect('admin/menu')->with('mensaje', 'Menú actualizado con éxito.');
     }
 
     /**
@@ -64,7 +69,8 @@ class MenuController extends Controller
      */
     public function eliminar(string $id)
     {
-        //
+        Menu::destroy($id);
+        return redirect('admin/menu')->with('mensaje', 'Menú eliminado con éxito.');
     }
 
     public function guardarOrden(Request $request)
