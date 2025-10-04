@@ -18,18 +18,38 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $validated = $request->validate([
-            'usuario' => 'required|min:4|max:16',
+            'usuario' => 'required|max:16',
             'password' => 'required|string'
         ]);
 
         if (Auth::attempt($validated)) {
             $request->session()->regenerate();
 
-            //return redirect()->route('ninjas.index');
+            $roles = Auth::user()->roles()->where('estado', 1)->get();
+            if ($roles->isNotEmpty()) {
+                Auth::user()->setSession($roles->toArray());
+            }else{
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect('seguridad/login')->withErrors(['error' => 'Este usuario no tiene un rol activo']);
+            }
+
+            return redirect()->route('inicio');
         }
 
         throw ValidationException::withMessages([
             'credentials' => 'Las credenciales introducidas son incorrectas.'
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('inicio');
     }
 }

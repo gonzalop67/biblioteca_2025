@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuRolController;
 use App\Http\Controllers\Admin\PermisoController;
@@ -12,8 +13,10 @@ Route::get('/', [InicioController::class, 'index'])->name('inicio');
 
 Route::get('seguridad/login', [LoginController::class, 'index'])->name('login');
 Route::post('seguridad/login', [LoginController::class, 'login'])->name('login_post');
+Route::post('seguridad/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function(){
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'superadmin']], function(){
+    Route::get('', [AdminController::class,'index'])->name('admin');
     /*RUTAS DEL MENU*/
     Route::get('permiso', [PermisoController::class, 'index'])->name('permiso');
     Route::get('permiso/crear', [PermisoController::class, 'crear'])->name('permiso.crear');
