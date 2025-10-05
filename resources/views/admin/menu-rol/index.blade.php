@@ -42,7 +42,7 @@ Menú - Rol
                                         type="checkbox"
                                         class="menu_rol"
                                         name="menu_rol[]"
-                                        data-menuid={{$menu[ "id"]}}
+                                        data-menuid={{$menu["id"]}}
                                         value="{{$id}}" {{in_array($id, array_column($menusRols[$menu["id"]], "id"))? "checked" : ""}}>
                                     </td>
                                 @endforeach
@@ -56,7 +56,7 @@ Menú - Rol
                                             type="checkbox"
                                             class="menu_rol"
                                             name="menu_rol[]"
-                                            data-menuid={{$hijo[ "id"]}}
+                                            data-menuid={{$hijo["id"]}}
                                             value="{{$id}}" {{in_array($id, array_column($menusRols[$hijo["id"]], "id"))? "checked" : ""}}>
                                         </td>
                                     @endforeach
@@ -70,7 +70,7 @@ Menú - Rol
                                                 type="checkbox"
                                                 class="menu_rol"
                                                 name="menu_rol[]"
-                                                data-menuid={{$hijo2[ "id"]}}
+                                                data-menuid={{$hijo2["id"]}}
                                                 value="{{$id}}" {{in_array($id, array_column($menusRols[$hijo2["id"]], "id"))? "checked" : ""}}>
                                             </td>
                                         @endforeach
@@ -84,7 +84,7 @@ Menú - Rol
                                                 type="checkbox"
                                                 class="menu_rol"
                                                 name="menu_rol[]"
-                                                data-menuid={{$hijo3[ "id"]}}
+                                                data-menuid={{$hijo3["id"]}}
                                                 value="{{$id}}" {{in_array($id, array_column($menusRols[$hijo3["id"]], "id"))? "checked" : ""}}>
                                             </td>
                                             @endforeach

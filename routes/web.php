@@ -4,8 +4,11 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\MenuRolController;
 use App\Http\Controllers\Admin\PermisoController;
+use App\Http\Controllers\Admin\PermisoRolController;
 use App\Http\Controllers\Admin\RolController;
+use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\InicioController;
+use App\Http\Controllers\LibroController;
 use App\Http\Controllers\Seguridad\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +18,15 @@ Route::get('seguridad/login', [LoginController::class, 'index'])->name('login');
 Route::post('seguridad/login', [LoginController::class, 'login'])->name('login_post');
 Route::post('seguridad/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'superadmin']], function(){
-    Route::get('', [AdminController::class,'index'])->name('admin');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'superadmin']], function () {
+    Route::get('', [AdminController::class, 'index'])->name('admin');
+    /*RUTAS DE USUARIO*/
+    Route::get('usuario', [UsuarioController::class, 'index'])->name('usuario');
+    Route::get('usuario/crear', [UsuarioController::class, 'crear'])->name('crear_usuario');
+    Route::post('usuario', [UsuarioController::class, 'guardar'])->name('guardar_usuario');
+    Route::get('usuario/{id}/editar', [UsuarioController::class, 'editar'])->name('editar_usuario');
+    Route::put('usuario/{id}', [UsuarioController::class, 'actualizar'])->name('actualizar_usuario');
+    Route::delete('usuario/{id}', [UsuarioController::class, 'eliminar'])->name('eliminar_usuario');
     /*RUTAS DE PERMISO*/
     Route::get('permiso', [PermisoController::class, 'index'])->name('permiso');
     Route::get('permiso/crear', [PermisoController::class, 'crear'])->name('crear_permiso');
@@ -42,4 +52,14 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     /*RUTAS MENU_ROL*/
     Route::get('menu-rol', [MenuRolController::class, 'index'])->name('menu_rol');
     Route::post('menu-rol', [MenuRolController::class, 'guardar'])->name('guardar_menu_rol');
+    /*RUTAS PERMISO_ROL*/
+    Route::get('permiso-rol', [PermisoRolController::class, 'index'])->name('permiso_rol');
+    Route::post('permiso-rol', [PermisoRolController::class, 'guardar'])->name('guardar_permiso_rol');
 });
+
+Route::get('libro', [LibroController::class, 'index'])->name('rol');
+Route::get('libro/crear', [LibroController::class, 'crear'])->name('crear_libro');
+Route::post('libro', [LibroController::class, 'guardar'])->name('guardar_libro');
+Route::get('libro/{id}/editar', [LibroController::class, 'editar'])->name('editar_libro');
+Route::put('libro/{id}', [LibroController::class, 'actualizar'])->name('actualizar_libro');
+Route::delete('libro/{id}', [LibroController::class, 'eliminar'])->name('eliminar_libro');

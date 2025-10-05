@@ -25,7 +25,7 @@ class LoginController extends Controller
         if (Auth::attempt($validated)) {
             $request->session()->regenerate();
 
-            $roles = Auth::user()->roles()->where('estado', 1)->get();
+            $roles = Auth::user()->roles()->get();
             if ($roles->isNotEmpty()) {
                 Auth::user()->setSession($roles->toArray());
             }else{

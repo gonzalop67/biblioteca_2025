@@ -20,21 +20,9 @@ class UsuarioAdministradorSeeder extends Seeder
             'password' => Hash::make('pass123'),
         ]);
 
-        DB::table('usuario')->insert([
-            'usuario' => 'rat',
-            'nombre' => 'Roosvelt',
-            'password' => Hash::make('pass123'),
-        ]);
-
         DB::table('usuario_rol')->insert([
             'rol_id' => 1,
             'usuario_id' => 1,
-            'estado' => 1,
-        ]);
-
-        DB::table('usuario_rol')->insert([
-            'rol_id' => 2,
-            'usuario_id' => 2,
             'estado' => 1,
         ]);
     }
