@@ -17,9 +17,14 @@ Route::post('seguridad/logout', [LoginController::class, 'logout'])->name('logou
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'superadmin']], function(){
     Route::get('', [AdminController::class,'index'])->name('admin');
-    /*RUTAS DEL MENU*/
+    /*RUTAS DE PERMISO*/
     Route::get('permiso', [PermisoController::class, 'index'])->name('permiso');
-    Route::get('permiso/crear', [PermisoController::class, 'crear'])->name('permiso.crear');
+    Route::get('permiso/crear', [PermisoController::class, 'crear'])->name('crear_permiso');
+    Route::post('permiso', [PermisoController::class, 'guardar'])->name('guardar_permiso');
+    Route::get('permiso/{id}/editar', [PermisoController::class, 'editar'])->name('editar_permiso');
+    Route::put('permiso/{id}', [PermisoController::class, 'actualizar'])->name('actualizar_permiso');
+    Route::delete('permiso/{id}', [PermisoController::class, 'eliminar'])->name('eliminar_permiso');
+    /*RUTAS DEL MENU*/
     Route::get('menu', [MenuController::class, 'index'])->name('menu');
     Route::get('menu/crear', [MenuController::class, 'crear'])->name('menu.crear');
     Route::post('menu', [MenuController::class, 'guardar'])->name('menu.guardar');
