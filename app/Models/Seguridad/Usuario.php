@@ -21,14 +21,18 @@ class Usuario extends Authenticatable
 
     public function setSession($roles)
     {
-        if (count($roles) == 1){
+        Session::put([
+            'usuario' => Auth::user()->usuario,
+            'usuario_id' => Auth::user()->id,
+            'nombre_usuario' => Auth::user()->nombre
+        ]);
+        if (count($roles) == 1) {
             Session::put([
                 'rol_id' => $roles[0]['id'],
                 'rol_nombre' => $roles[0]['nombre'],
-                'usuario' => Auth::user()->usuario,
-                'usuario_id' => Auth::user()->id,
-                'nombre_usuario' => Auth::user()->nombre
             ]);
+        } else {
+            Session::put('roles', $roles);
         }
     }
 

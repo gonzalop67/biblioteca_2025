@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PermisoController;
 use App\Http\Controllers\Admin\PermisoRolController;
 use App\Http\Controllers\Admin\RolController;
 use App\Http\Controllers\Admin\UsuarioController;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\InicioController;
 use App\Http\Controllers\LibroController;
 use App\Http\Controllers\Seguridad\LoginController;
@@ -17,6 +18,8 @@ Route::get('/', [InicioController::class, 'index'])->name('inicio');
 Route::get('seguridad/login', [LoginController::class, 'index'])->name('login');
 Route::post('seguridad/login', [LoginController::class, 'login'])->name('login_post');
 Route::post('seguridad/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::post('ajax-session', [AjaxController::class, 'setSession'])->name('ajax')->middleware('auth');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'superadmin']], function () {
     Route::get('', [AdminController::class, 'index'])->name('admin');
