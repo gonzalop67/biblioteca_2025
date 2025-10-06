@@ -14,8 +14,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = Usuario::orderBy('id')->get();
-        return view('admin.usuario.index', compact('usuarios'));
+        $datas = Usuario::with('roles:id,nombre')->orderBy('id')->get();
+        return view('admin.usuario.index', compact('datas'));
     }
 
     /**
@@ -38,11 +38,11 @@ class UsuarioController extends Controller
             'email' => 'required|email|max:100|unique:usuario,email',
             'password' => 'required|min:5',
             're_password' => 'required|same:password',
-            'rol_id' => 'required|integer'
+            'rol_id' => 'required|array'
         ]);
 
         $usuario = Usuario::create($request->all());
-        $usuario->roles()->attach($request->rol_id);
+        $usuario->roles()->sync($request->rol_id);
         return redirect('admin/usuario')->with('mensaje', 'Usuario creado con éxito');
     }
 
@@ -67,18 +67,27 @@ class UsuarioController extends Controller
             'email' => 'required|email|max:100|unique:usuario,email,' . $id,
             'password' => 'nullable|min:5',
             're_password' => 'nullable|required_with:password|min:5|same:password',
-            'rol_id' => 'required|integer'
+            'rol_id' => 'required|array'
         ]);
 
-        Usuario::findOrFail($id)->update(array_filter($request->all()));
+        $usuario = Usuario::findOrFail($id);
+        $usuario->update(array_filter($request->all()));
+        $usuario->roles()->sync($request->rol_id);
         return redirect('admin/usuario')->with('mensaje', 'Usuario actualizado con éxito.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function eliminar(string $id)
+    public function eliminar(Request $request, string $id)
     {
-        //
+        if ($request->ajax()) {
+            $usuario = Usuario::findOrFail($id);
+            $usuario->roles()->detach();
+            $usuario->delete();
+            return response()->json(['mensaje' => 'ok']);
+        } else {
+            abort(403);
+        }
     }
 }

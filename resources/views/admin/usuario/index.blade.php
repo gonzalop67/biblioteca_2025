@@ -27,22 +27,28 @@
                                 <th>Usuario</th>
                                 <th>Nombre</th>
                                 <th>Email</th>
+                                <th>Roles</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($usuarios as $usuario)
+                            @foreach ($datas as $data)
                                 <tr>
-                                    <td>{{ $usuario->id }}</td>
-                                    <td>{{ $usuario->usuario }}</td>
-                                    <td>{{ $usuario->nombre }}</td>
-                                    <td>{{ $usuario->email }}</td>
+                                    <td>{{ $data->id }}</td>
+                                    <td>{{ $data->usuario }}</td>
+                                    <td>{{ $data->nombre }}</td>
+                                    <td>{{ $data->email }}</td>
+                                    <td>
+                                        @foreach ($data->roles as $rol)
+                                            {{ $loop->last ? $rol->nombre : $rol->nombre . ', ' }}
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <div>
-                                            <a href="{{ route('editar_usuario', $usuario->id) }}" class="btn btn-warning btn-sm"
+                                            <a href="{{ route('editar_usuario', $data->id) }}" class="btn btn-warning btn-sm"
                                                 title="Editar"><span class="fa fa-pencil"></span>
                                             </a>
-                                            <form method="post" action="{{ route('eliminar_usuario', $usuario->id) }}"
+                                            <form method="post" action="{{ route('eliminar_usuario', $data->id) }}"
                                                 class="d-inline form-eliminar">
                                                 @csrf @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-sm eliminar"
