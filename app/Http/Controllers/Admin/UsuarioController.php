@@ -65,12 +65,12 @@ class UsuarioController extends Controller
             'usuario' => 'required|max:50|unique:usuario,usuario,' . $id,
             'nombre' => 'required|max:50',
             'email' => 'required|email|max:100|unique:usuario,email,' . $id,
-            'password' => 'required|min:5',
-            're_password' => 'required|same:password',
+            'password' => 'nullable|min:5',
+            're_password' => 'nullable|required_with:password|min:5|same:password',
             'rol_id' => 'required|integer'
         ]);
 
-        Usuario::findOrFail($id)->update($request->all());
+        Usuario::findOrFail($id)->update(array_filter($request->all()));
         return redirect('admin/usuario')->with('mensaje', 'Usuario actualizado con éxito.');
     }
 
